@@ -59,7 +59,10 @@ class Interval {
     }
 
     getCloseString(): string {
-        return insertColon((this.getClose()).toString());
+        var time = this.getClose();
+        // Rectify our weird 24+ data scheme
+        if (time > 2400) time -= 2400;
+        return insertColon(time.toString());
     }
 
     getInterval(): [number, number] {
@@ -117,6 +120,8 @@ class Place {
     isOpenNow(): boolean {
         var date = new Date();
         var hour: number = date.getHours();
+        // I'm arbitrarily deciding that any times before 4:59am belong to the previous day.
+        if (hour < 5) hour += 24;
         var minute: number = date.getMinutes();
         var time: number = (hour * 100) + minute;
         var openings: [Interval] = this.getHoursForToday();
@@ -146,12 +151,21 @@ function insertColon(time: string): string {
 // name, isOnCampus, Sunday, Monday,<...>, Saturday
 var places : [Place] = [
     new Place("Open Kitchen", true,
-    /*Sunday*/      Interval.none,
+    /*Sunday*/      [new Interval(1000, 1400)],
     /*Monday*/      [new Interval(730, 1130), new Interval(1500, 1900)],
     /*Tuesday*/     [new Interval(730, 1130), new Interval(1500, 1900)],
     /*Wednesday*/   [new Interval(730, 1130), new Interval(1500, 1900)],
     /*Thursday*/    [new Interval(730, 1130), new Interval(1500, 1900)],
     /*Friday*/      [new Interval(730, 1130), new Interval(1500, 1900)],
+    /*Saturday*/    [new Interval(1000, 1400)]
+                ),
+    new Place("House Dinner", true,
+    /*Sunday*/      Interval.none,
+    /*Monday*/      [new Interval(1730, 1900)],
+    /*Tuesday*/     [new Interval(1730, 1900)],
+    /*Wednesday*/   [new Interval(1730, 1900)],
+    /*Thursday*/    [new Interval(1730, 1900)],
+    /*Friday*/      [new Interval(1700, 1830)],
     /*Saturday*/    Interval.none
                 ),
     new Place("Chandler Breakfast", true,
@@ -161,6 +175,33 @@ var places : [Place] = [
     /*Wednesday*/   [new Interval(700, 1000)],
     /*Thursday*/    [new Interval(700, 1000)],
     /*Friday*/      [new Interval(700, 1000)],
+    /*Saturday*/    Interval.none
+                ),
+    new Place("Chandler Sushi", true,
+    /*Sunday*/      Interval.none,
+    /*Monday*/      [new Interval(1100, 1330)],
+    /*Tuesday*/     [new Interval(1100, 1330)],
+    /*Wednesday*/   [new Interval(1100, 1330)],
+    /*Thursday*/    [new Interval(1100, 1330)],
+    /*Friday*/      [new Interval(1100, 1330)],
+    /*Saturday*/    Interval.none
+                ),
+    new Place("Chandler Lunch", true,
+    /*Sunday*/      Interval.none,
+    /*Monday*/      [new Interval(1100, 1430)],
+    /*Tuesday*/     [new Interval(1100, 1430)],
+    /*Wednesday*/   [new Interval(1100, 1430)],
+    /*Thursday*/    [new Interval(1100, 1430)],
+    /*Friday*/      [new Interval(1100, 1430)],
+    /*Saturday*/    Interval.none
+                ),
+    new Place("Chandler Pizza and Grill", true,
+    /*Sunday*/      Interval.none,
+    /*Monday*/      [new Interval(1100, 1530)],
+    /*Tuesday*/     [new Interval(1100, 1530)],
+    /*Wednesday*/   [new Interval(1100, 1530)],
+    /*Thursday*/    [new Interval(1100, 1530)],
+    /*Friday*/      [new Interval(1100, 1530)],
     /*Saturday*/    Interval.none
                 ),
     new Place("Red Door", true,
@@ -179,6 +220,42 @@ var places : [Place] = [
     /*Wednesday*/   [new Interval(745, 1430)],
     /*Thursday*/    [new Interval(745, 1430)],
     /*Friday*/      [new Interval(745, 1430)],
+    /*Saturday*/    Interval.none
+                ),
+    new Place("Chouse Grill", true,
+    /*Sunday*/      [new Interval(2200, 2530)],
+    /*Monday*/      [new Interval(2200, 2530)],
+    /*Tuesday*/     [new Interval(2200, 2530)],
+    /*Wednesday*/   [new Interval(2200, 2530)],
+    /*Thursday*/    [new Interval(2200, 2530)],
+    /*Friday*/      Interval.none,
+    /*Saturday*/    Interval.none
+                ),
+    new Place("Chouse", true,
+    /*Sunday*/      [new Interval(2200, 2600)],
+    /*Monday*/      [new Interval(2200, 2600)],
+    /*Tuesday*/     [new Interval(2200, 2600)],
+    /*Wednesday*/   [new Interval(2200, 2600)],
+    /*Thursday*/    [new Interval(2200, 2600)],
+    /*Friday*/      Interval.none,
+    /*Saturday*/    Interval.none
+                ),
+    new Place("C-Store", true,
+    /*Sunday*/      [new Interval(1200, 2500)],
+    /*Monday*/      [new Interval(1030, 2500)],
+    /*Tuesday*/     [new Interval(1030, 2500)],
+    /*Wednesday*/   [new Interval(1030, 2500)],
+    /*Thursday*/    [new Interval(1030, 2500)],
+    /*Friday*/      [new Interval(1030, 2500)],
+    /*Saturday*/    [new Interval(1100, 2000)]
+                ),
+    new Place("Package Annex", true,
+    /*Sunday*/      Interval.none,
+    /*Monday*/      [new Interval(900, 1600), new Interval(2030, 2230)],
+    /*Tuesday*/     [new Interval(900, 1600), new Interval(2030, 2230)],
+    /*Wednesday*/   [new Interval(900, 1600), new Interval(2030, 2230)],
+    /*Thursday*/    [new Interval(900, 1600), new Interval(2030, 2230)],
+    /*Friday*/      [new Interval(900, 1600), new Interval(2030, 2230)],
     /*Saturday*/    Interval.none
                 ),
 ]
