@@ -188,12 +188,9 @@ function updateCurrentTime(): void {
     currentTime.innerText = "Current time is: " + (new Date()).toLocaleTimeString('en-US', {hour12: false});
 }
 
-window.onload = function() {
-    // Populate the Current Time field
-    updateCurrentTime();
-    setInterval(updateCurrentTime, 1000);
-
-    // Populate the list of places
+function updateHighlighting(): void {
+    var element = document.getElementById("listOfPlaces");
+    element.innerHTML = "";
     for (var i=0; i<places.length; i++) {
         var place: Place = places[i];
 
@@ -209,7 +206,17 @@ window.onload = function() {
             addClass(para, "closed");
         }
 
-        var element = document.getElementById("listOfPlaces");
         element.appendChild(para);
     }
+}
+
+window.onload = function() {
+    // Populate the Current Time field
+    updateCurrentTime();
+    setInterval(updateCurrentTime, 5000);
+
+    // Populate the list of places
+    updateHighlighting();
+    setInterval(updateHighlighting, 5000);
+
 }
