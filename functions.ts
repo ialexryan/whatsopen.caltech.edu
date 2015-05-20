@@ -189,8 +189,10 @@ function updateCurrentTime(): void {
 }
 
 function updateHighlighting(): void {
-    var element = document.getElementById("listOfPlaces");
-    element.innerHTML = "";
+    var openPlaces = document.getElementById("openPlaces");
+    var closedPlaces = document.getElementById("closedPlaces");
+    openPlaces.innerHTML = "";
+    closedPlaces.innerHTML = "";
     for (var i=0; i<places.length; i++) {
         var place: Place = places[i];
 
@@ -202,11 +204,11 @@ function updateHighlighting(): void {
 
         if (place.isOpenNow()) {
             addClass(para, "open");
+            openPlaces.appendChild(para);
         } else {
             addClass(para, "closed");
+            closedPlaces.appendChild(para);
         }
-
-        element.appendChild(para);
     }
 }
 

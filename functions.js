@@ -119,8 +119,10 @@ function updateCurrentTime() {
     currentTime.innerText = "Current time is: " + (new Date()).toLocaleTimeString('en-US', { hour12: false });
 }
 function updateHighlighting() {
-    var element = document.getElementById("listOfPlaces");
-    element.innerHTML = "";
+    var openPlaces = document.getElementById("openPlaces");
+    var closedPlaces = document.getElementById("closedPlaces");
+    openPlaces.innerHTML = "";
+    closedPlaces.innerHTML = "";
     for (var i = 0; i < places.length; i++) {
         var place = places[i];
         var content = place.getName() + ": " + stringifyHours(place.getHoursForToday());
@@ -129,11 +131,12 @@ function updateHighlighting() {
         para.appendChild(text);
         if (place.isOpenNow()) {
             addClass(para, "open");
+            openPlaces.appendChild(para);
         }
         else {
             addClass(para, "closed");
+            closedPlaces.appendChild(para);
         }
-        element.appendChild(para);
     }
 }
 window.onload = function () {
