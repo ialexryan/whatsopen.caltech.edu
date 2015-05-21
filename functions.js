@@ -120,7 +120,8 @@ function updateCurrentTime() {
     var currentTime = document.getElementById("currentTime");
     var date = new Date();
     var time = (date.getHours() * 100) + date.getMinutes();
-    currentTime.innerText = "Current time is: " + stringifyHour(time);
+    var timeString = "Current time is: " + stringifyHour(time);
+    currentTime.innerHTML = timeString;
 }
 function updateHighlighting() {
     var openPlaces = document.getElementById("openPlaces");

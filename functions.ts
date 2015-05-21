@@ -260,7 +260,8 @@ function updateCurrentTime(): void {
     var currentTime = document.getElementById("currentTime");
     var date = new Date();
     var time: number = (date.getHours() * 100) + date.getMinutes();
-    currentTime.innerText = "Current time is: " + stringifyHour(time);
+    var timeString: string = "Current time is: " + stringifyHour(time);
+    currentTime.innerHTML = timeString;
 }
 
 function updateHighlighting(): void {
