@@ -1,38 +1,5 @@
-// From http://www.kirupa.com/html5/setting_css_styles_using_javascript.htm
-
-function addClass(element, classToAdd) {
-    var currentClassValue = element.className;
-
-    if (currentClassValue.indexOf(classToAdd) == -1) {
-        if ((currentClassValue == null) || (currentClassValue === "")) {
-            element.className = classToAdd;
-        } else {
-            element.className += " " + classToAdd;
-        }
-    }
-}
-
-function removeClass(element, classToRemove) {
-    var currentClassValue = element.className;
-
-    if (currentClassValue == classToRemove) {
-        element.className = "";
-        return;
-    }
-
-    var classValues = currentClassValue.split(" ");
-    var filteredList = [];
-
-    for (var i = 0 ; i < classValues.length; i++) {
-        if (classToRemove != classValues[i]) {
-            filteredList.push(classValues[i]);
-        }
-    }
-
-    element.className = filteredList.join(" ");
-}
-
-
+// Copyright 2015 Alex Ryan
+// Typescript is awesome!
 
 class Interval {
 
@@ -51,7 +18,7 @@ class Interval {
     }
 
     getOpenString(): string {
-        return insertColon((this.getOpen()).toString());
+        return stringifyHour(this.openingTime);
     }
 
     getClose(): number {
@@ -59,10 +26,7 @@ class Interval {
     }
 
     getCloseString(): string {
-        var time = this.getClose();
-        // Rectify our weird 24+ data scheme
-        if (time > 2400) time -= 2400;
-        return insertColon(time.toString());
+        return stringifyHour(this.closingTime);
     }
 
     getInterval(): [number, number] {
@@ -133,6 +97,24 @@ class Place {
     }
 }
 
+function insertColon(time: string): string {
+    return time.slice(0, -2) + ":" + time.slice(-2, time.length);
+}
+
+function stringifyHour(hour: number): string {
+    var output: string = "";
+    if (hour > 2400) {
+        hour -= 2400;
+        output = insertColon(hour.toString()) + "am";
+    } else if (hour > 1200) {
+        hour -= 1200;
+        output = insertColon(hour.toString()) + "pm";
+    } else {
+        output = insertColon(hour.toString()) + "am";
+    }
+    return output;
+}
+
 function stringifyHours(hours: [Interval]): string {
     if (hours == Interval.none) return "closed today";
     var output: string = "";
@@ -141,10 +123,6 @@ function stringifyHours(hours: [Interval]): string {
         output += x.getIntervalString() + " and ";
     }
     return output.slice(0, -5);  //remove that annoying last "and"
-}
-
-function insertColon(time: string): string {
-    return time.slice(0, -2) + ":" + time.slice(-2, time.length);
 }
 
 
@@ -158,15 +136,6 @@ var places : [Place] = [
     /*Thursday*/    [new Interval(730, 1130), new Interval(1500, 1900)],
     /*Friday*/      [new Interval(730, 1130), new Interval(1500, 1900)],
     /*Saturday*/    [new Interval(1000, 1400)]
-                ),
-    new Place("House Dinner", true,
-    /*Sunday*/      Interval.none,
-    /*Monday*/      [new Interval(1730, 1900)],
-    /*Tuesday*/     [new Interval(1730, 1900)],
-    /*Wednesday*/   [new Interval(1730, 1900)],
-    /*Thursday*/    [new Interval(1730, 1900)],
-    /*Friday*/      [new Interval(1700, 1830)],
-    /*Saturday*/    Interval.none
                 ),
     new Place("Chandler Breakfast", true,
     /*Sunday*/      Interval.none,
@@ -222,6 +191,15 @@ var places : [Place] = [
     /*Friday*/      [new Interval(745, 1430)],
     /*Saturday*/    Interval.none
                 ),
+    new Place("House Dinner", true,
+    /*Sunday*/      Interval.none,
+    /*Monday*/      [new Interval(1730, 1900)],
+    /*Tuesday*/     [new Interval(1730, 1900)],
+    /*Wednesday*/   [new Interval(1730, 1900)],
+    /*Thursday*/    [new Interval(1730, 1900)],
+    /*Friday*/      [new Interval(1700, 1830)],
+    /*Saturday*/    Interval.none
+                ),
     new Place("Chouse Grill", true,
     /*Sunday*/      [new Interval(2200, 2530)],
     /*Monday*/      [new Interval(2200, 2530)],
@@ -256,6 +234,24 @@ var places : [Place] = [
     /*Wednesday*/   [new Interval(900, 1600), new Interval(2030, 2230)],
     /*Thursday*/    [new Interval(900, 1600), new Interval(2030, 2230)],
     /*Friday*/      [new Interval(900, 1600), new Interval(2030, 2230)],
+    /*Saturday*/    Interval.none
+                ),
+    new Place("Gym", true,
+    /*Sunday*/      [new Interval(800, 2000)],
+    /*Monday*/      [new Interval(600, 2230)],
+    /*Tuesday*/     [new Interval(600, 2230)],
+    /*Wednesday*/   [new Interval(600, 2230)],
+    /*Thursday*/    [new Interval(600, 2230)],
+    /*Friday*/      [new Interval(600, 2230)],
+    /*Saturday*/    [new Interval(800, 2000)]
+                ),
+    new Place("Bookstore", true,
+    /*Sunday*/      Interval.none,
+    /*Monday*/      [new Interval(830, 1730)],
+    /*Tuesday*/     [new Interval(830, 1730)],
+    /*Wednesday*/   [new Interval(830, 1730)],
+    /*Thursday*/    [new Interval(830, 1730)],
+    /*Friday*/      [new Interval(830, 1730)],
     /*Saturday*/    Interval.none
                 ),
 ]
@@ -297,5 +293,4 @@ window.onload = function() {
     // Populate the list of places
     updateHighlighting();
     setInterval(updateHighlighting, 5000);
-
 }

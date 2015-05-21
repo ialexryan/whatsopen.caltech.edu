@@ -1,30 +1,5 @@
-// From http://www.kirupa.com/html5/setting_css_styles_using_javascript.htm
-function addClass(element, classToAdd) {
-    var currentClassValue = element.className;
-    if (currentClassValue.indexOf(classToAdd) == -1) {
-        if ((currentClassValue == null) || (currentClassValue === "")) {
-            element.className = classToAdd;
-        }
-        else {
-            element.className += " " + classToAdd;
-        }
-    }
-}
-function removeClass(element, classToRemove) {
-    var currentClassValue = element.className;
-    if (currentClassValue == classToRemove) {
-        element.className = "";
-        return;
-    }
-    var classValues = currentClassValue.split(" ");
-    var filteredList = [];
-    for (var i = 0; i < classValues.length; i++) {
-        if (classToRemove != classValues[i]) {
-            filteredList.push(classValues[i]);
-        }
-    }
-    element.className = filteredList.join(" ");
-}
+// Copyright 2015 Alex Ryan
+// Typescript is awesome!
 var Interval = (function () {
     function Interval(open, close) {
         this.openingTime = open;
@@ -34,16 +9,13 @@ var Interval = (function () {
         return this.openingTime;
     };
     Interval.prototype.getOpenString = function () {
-        return insertColon((this.getOpen()).toString());
+        return stringifyHour(this.openingTime);
     };
     Interval.prototype.getClose = function () {
         return this.closingTime;
     };
     Interval.prototype.getCloseString = function () {
-        var time = this.getClose();
-        if (time > 2400)
-            time -= 2400;
-        return insertColon(time.toString());
+        return stringifyHour(this.closingTime);
     };
     Interval.prototype.getInterval = function () {
         return [this.openingTime, this.closingTime];
@@ -100,6 +72,24 @@ var Place = (function () {
     };
     return Place;
 })();
+function insertColon(time) {
+    return time.slice(0, -2) + ":" + time.slice(-2, time.length);
+}
+function stringifyHour(hour) {
+    var output = "";
+    if (hour > 2400) {
+        hour -= 2400;
+        output = insertColon(hour.toString()) + "am";
+    }
+    else if (hour > 1200) {
+        hour -= 1200;
+        output = insertColon(hour.toString()) + "pm";
+    }
+    else {
+        output = insertColon(hour.toString()) + "am";
+    }
+    return output;
+}
 function stringifyHours(hours) {
     if (hours == Interval.none)
         return "closed today";
@@ -110,22 +100,21 @@ function stringifyHours(hours) {
     }
     return output.slice(0, -5);
 }
-function insertColon(time) {
-    return time.slice(0, -2) + ":" + time.slice(-2, time.length);
-}
 var places = [
     new Place("Open Kitchen", true, [new Interval(1000, 1400)], [new Interval(730, 1130), new Interval(1500, 1900)], [new Interval(730, 1130), new Interval(1500, 1900)], [new Interval(730, 1130), new Interval(1500, 1900)], [new Interval(730, 1130), new Interval(1500, 1900)], [new Interval(730, 1130), new Interval(1500, 1900)], [new Interval(1000, 1400)]),
-    new Place("House Dinner", true, Interval.none, [new Interval(1730, 1900)], [new Interval(1730, 1900)], [new Interval(1730, 1900)], [new Interval(1730, 1900)], [new Interval(1700, 1830)], Interval.none),
     new Place("Chandler Breakfast", true, Interval.none, [new Interval(700, 1000)], [new Interval(700, 1000)], [new Interval(700, 1000)], [new Interval(700, 1000)], [new Interval(700, 1000)], Interval.none),
     new Place("Chandler Sushi", true, Interval.none, [new Interval(1100, 1330)], [new Interval(1100, 1330)], [new Interval(1100, 1330)], [new Interval(1100, 1330)], [new Interval(1100, 1330)], Interval.none),
     new Place("Chandler Lunch", true, Interval.none, [new Interval(1100, 1430)], [new Interval(1100, 1430)], [new Interval(1100, 1430)], [new Interval(1100, 1430)], [new Interval(1100, 1430)], Interval.none),
     new Place("Chandler Pizza and Grill", true, Interval.none, [new Interval(1100, 1530)], [new Interval(1100, 1530)], [new Interval(1100, 1530)], [new Interval(1100, 1530)], [new Interval(1100, 1530)], Interval.none),
     new Place("Red Door", true, Interval.none, [new Interval(730, 1730)], [new Interval(730, 1730)], [new Interval(730, 1730)], [new Interval(730, 1730)], [new Interval(730, 1730)], Interval.none),
     new Place("Broad Cafe", true, Interval.none, [new Interval(745, 1430)], [new Interval(745, 1430)], [new Interval(745, 1430)], [new Interval(745, 1430)], [new Interval(745, 1430)], Interval.none),
+    new Place("House Dinner", true, Interval.none, [new Interval(1730, 1900)], [new Interval(1730, 1900)], [new Interval(1730, 1900)], [new Interval(1730, 1900)], [new Interval(1700, 1830)], Interval.none),
     new Place("Chouse Grill", true, [new Interval(2200, 2530)], [new Interval(2200, 2530)], [new Interval(2200, 2530)], [new Interval(2200, 2530)], [new Interval(2200, 2530)], Interval.none, Interval.none),
     new Place("Chouse", true, [new Interval(2200, 2600)], [new Interval(2200, 2600)], [new Interval(2200, 2600)], [new Interval(2200, 2600)], [new Interval(2200, 2600)], Interval.none, Interval.none),
     new Place("C-Store", true, [new Interval(1200, 2500)], [new Interval(1030, 2500)], [new Interval(1030, 2500)], [new Interval(1030, 2500)], [new Interval(1030, 2500)], [new Interval(1030, 2500)], [new Interval(1100, 2000)]),
     new Place("Package Annex", true, Interval.none, [new Interval(900, 1600), new Interval(2030, 2230)], [new Interval(900, 1600), new Interval(2030, 2230)], [new Interval(900, 1600), new Interval(2030, 2230)], [new Interval(900, 1600), new Interval(2030, 2230)], [new Interval(900, 1600), new Interval(2030, 2230)], Interval.none),
+    new Place("Gym", true, [new Interval(800, 2000)], [new Interval(600, 2230)], [new Interval(600, 2230)], [new Interval(600, 2230)], [new Interval(600, 2230)], [new Interval(600, 2230)], [new Interval(800, 2000)]),
+    new Place("Bookstore", true, Interval.none, [new Interval(830, 1730)], [new Interval(830, 1730)], [new Interval(830, 1730)], [new Interval(830, 1730)], [new Interval(830, 1730)], Interval.none),
 ];
 function updateCurrentTime() {
     var currentTime = document.getElementById("currentTime");
