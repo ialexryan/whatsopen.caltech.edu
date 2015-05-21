@@ -118,7 +118,7 @@ var places = [
 ];
 function updateCurrentTime() {
     var currentTime = document.getElementById("currentTime");
-    currentTime.innerText = "Current time is: " + (new Date()).toLocaleTimeString('en-US', { hour12: false });
+    currentTime.innerText = "Current time is: " + (new Date()).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 }
 function updateHighlighting() {
     var openPlaces = document.getElementById("openPlaces");
