@@ -52,17 +52,24 @@ var Place = (function () {
             case 6: return this.Saturday;
         }
     };
+    Place.prototype.getHoursForYesterday = function () {
+        return this.getHoursForDay(((new Date()).getDay() - 1 + 7) % 7);
+    };
     Place.prototype.getHoursForToday = function () {
         return this.getHoursForDay((new Date()).getDay());
     };
     Place.prototype.isOpenNow = function () {
         var date = new Date();
         var hour = date.getHours();
-        if (hour < 5)
-            hour += 24;
         var minute = date.getMinutes();
+        if (hour < 5) {
+            hour += 24;
+            var openings = this.getHoursForYesterday();
+        }
+        else {
+            var openings = this.getHoursForToday();
+        }
         var time = (hour * 100) + minute;
-        var openings = this.getHoursForToday();
         for (var i = 0; i < openings.length; i++) {
             var x = openings[i];
             if ((time > x.getOpen()) && (time < x.getClose()))

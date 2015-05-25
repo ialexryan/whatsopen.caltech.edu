@@ -77,6 +77,10 @@ class Place {
         }
     }
 
+    getHoursForYesterday(): [Interval] {
+        return this.getHoursForDay(((new Date()).getDay() - 1 + 7) % 7);
+    }
+
     getHoursForToday(): [Interval] {
         return this.getHoursForDay((new Date()).getDay());
     }
@@ -84,11 +88,15 @@ class Place {
     isOpenNow(): boolean {
         var date = new Date();
         var hour: number = date.getHours();
-        // I'm arbitrarily deciding that any times before 4:59am belong to the previous day.
-        if (hour < 5) hour += 24;
         var minute: number = date.getMinutes();
+        if (hour < 5) {
+            // I'm arbitrarily deciding that any times before 4:59am belong to the previous day.
+            hour += 24;
+            var openings: [Interval] = this.getHoursForYesterday();
+        } else {
+            var openings: [Interval] = this.getHoursForToday();
+        }
         var time: number = (hour * 100) + minute;
-        var openings: [Interval] = this.getHoursForToday();
         for (var i=0; i<openings.length; i++) {
             var x: Interval = openings[i];
             if ((time > x.getOpen()) && (time < x.getClose())) return true;
