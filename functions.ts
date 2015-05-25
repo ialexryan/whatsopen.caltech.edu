@@ -145,7 +145,7 @@ var places : [Place] = [
     /*Friday*/      [new Interval(730, 1130), new Interval(1500, 1900)],
     /*Saturday*/    [new Interval(1000, 1400)]
                 ),
-    new Place("Chandler Breakfast", true,
+    new Place("Chandler (Breakfast)", true,
     /*Sunday*/      Interval.none,
     /*Monday*/      [new Interval(700, 1000)],
     /*Tuesday*/     [new Interval(700, 1000)],
@@ -154,7 +154,7 @@ var places : [Place] = [
     /*Friday*/      [new Interval(700, 1000)],
     /*Saturday*/    Interval.none
                 ),
-    new Place("Chandler Sushi", true,
+    new Place("Chandler (Sushi)", true,
     /*Sunday*/      Interval.none,
     /*Monday*/      [new Interval(1100, 1330)],
     /*Tuesday*/     [new Interval(1100, 1330)],
@@ -163,7 +163,7 @@ var places : [Place] = [
     /*Friday*/      [new Interval(1100, 1330)],
     /*Saturday*/    Interval.none
                 ),
-    new Place("Chandler Lunch", true,
+    new Place("Chandler (Lunch)", true,
     /*Sunday*/      Interval.none,
     /*Monday*/      [new Interval(1100, 1430)],
     /*Tuesday*/     [new Interval(1100, 1430)],
@@ -172,7 +172,7 @@ var places : [Place] = [
     /*Friday*/      [new Interval(1100, 1430)],
     /*Saturday*/    Interval.none
                 ),
-    new Place("Chandler Pizza and Grill", true,
+    new Place("Chandler (Pizza and Grill)", true,
     /*Sunday*/      Interval.none,
     /*Monday*/      [new Interval(1100, 1530)],
     /*Tuesday*/     [new Interval(1100, 1530)],
@@ -208,7 +208,7 @@ var places : [Place] = [
     /*Friday*/      [new Interval(1700, 1830)],
     /*Saturday*/    Interval.none
                 ),
-    new Place("Chouse Grill", true,
+    new Place("Chouse (Grill)", true,
     /*Sunday*/      [new Interval(2200, 2530)],
     /*Monday*/      [new Interval(2200, 2530)],
     /*Tuesday*/     [new Interval(2200, 2530)],
