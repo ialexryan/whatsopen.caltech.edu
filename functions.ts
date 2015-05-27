@@ -118,7 +118,11 @@ function insertColon(time: string): string {
 
 function stringifyHour(hour: number): string {
     var output: string = "";
-    if (hour > 2400) {
+    if ((hour == 2400) || (hour == 0)) {
+        output = "midnight";
+    } else if (hour == 1200) {
+        output = "noon";
+    } else if (hour > 2400) {
         hour -= 2400;
         output = insertColon(hour.toString()) + "am";
     } else if (hour > 1200) {
