@@ -68,7 +68,7 @@ class Place {
         return this.name;
     }
 
-    getHoursForDay(d : number) : [Interval] {
+    getHoursForDay(d: number): [Interval] {
         switch (d) {
             case 0: return this.Sunday;
             case 1: return this.Monday;
@@ -89,7 +89,7 @@ class Place {
     }
 
     isOpenNow(): boolean {
-        var date = new Date();
+        var date: Date = new Date();
         var hour: number = date.getHours();
         var minute: number = date.getMinutes();
         if (hour < 5) {
@@ -269,7 +269,7 @@ var places : [Place] = [
 
 function updateCurrentTime(): void {
     var currentTime = document.getElementById("currentTime");
-    var date = new Date();
+    var date: Date = new Date();
     var time: number = (date.getHours() * 100) + date.getMinutes();
     var timeString: string = "Current time is: " + stringifyHour(time);
     currentTime.innerHTML = timeString;
