@@ -315,15 +315,18 @@ var places : [Place] = [
                 ),
 ]
 
-function updateCurrentTime(): void {
-    var currentTime = document.getElementById("currentTime");
+/* This function recomputes the current time and updates the DOM */
+function redrawCurrentTime(): void {
     var date: Date = new Date();
     var time: number = (date.getHours() * 100) + date.getMinutes();
     var timeString: string = "Current time is: " + stringifyHour(time);
+    var currentTime = document.getElementById("currentTime");
     currentTime.innerHTML = timeString;
 }
 
-function updateHighlighting(): void {
+/* This function recomputes which places are open and closed and
+   when their next opening times are, and updates the DOM */
+function redrawPlaces(): void {
     var openPlaces = document.getElementById("openPlaces");
     var closedPlaces = document.getElementById("closedPlaces");
     openPlaces.innerHTML = "";
@@ -347,12 +350,14 @@ function updateHighlighting(): void {
     }
 }
 
+/* This is the "main" function of sorts, it gets called when the page loads.
+   It sets the places list and time to refresh every 5 seconds. */
 window.onload = function() {
     // Populate the Current Time field
-    updateCurrentTime();
-    setInterval(updateCurrentTime, 5000);
+    redrawCurrentTime();
+    setInterval(redrawCurrentTime, 5000);
 
     // Populate the list of places
-    updateHighlighting();
-    setInterval(updateHighlighting, 5000);
+    redrawPlaces();
+    setInterval(redrawPlaces, 5000);
 }

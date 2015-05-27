@@ -151,14 +151,14 @@ var places = [
     new Place("Gym", true, [new Interval(800, 2000)], [new Interval(600, 2230)], [new Interval(600, 2230)], [new Interval(600, 2230)], [new Interval(600, 2230)], [new Interval(600, 2230)], [new Interval(800, 2000)]),
     new Place("Bookstore", true, Interval.none, [new Interval(830, 1730)], [new Interval(830, 1730)], [new Interval(830, 1730)], [new Interval(830, 1730)], [new Interval(830, 1730)], Interval.none),
 ];
-function updateCurrentTime() {
-    var currentTime = document.getElementById("currentTime");
+function redrawCurrentTime() {
     var date = new Date();
     var time = (date.getHours() * 100) + date.getMinutes();
     var timeString = "Current time is: " + stringifyHour(time);
+    var currentTime = document.getElementById("currentTime");
     currentTime.innerHTML = timeString;
 }
-function updateHighlighting() {
+function redrawPlaces() {
     var openPlaces = document.getElementById("openPlaces");
     var closedPlaces = document.getElementById("closedPlaces");
     openPlaces.innerHTML = "";
@@ -180,8 +180,8 @@ function updateHighlighting() {
     }
 }
 window.onload = function () {
-    updateCurrentTime();
-    setInterval(updateCurrentTime, 5000);
-    updateHighlighting();
-    setInterval(updateHighlighting, 5000);
+    redrawCurrentTime();
+    setInterval(redrawCurrentTime, 5000);
+    redrawPlaces();
+    setInterval(redrawPlaces, 5000);
 };
