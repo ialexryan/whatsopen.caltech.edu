@@ -93,7 +93,7 @@ function insertColon(time) {
     return time.slice(0, -2) + ":" + time.slice(-2, time.length);
 }
 function stringifyHour(hour) {
-    var output;
+    var output = "";
     if ((hour == 2400) || (hour == 0)) {
         output = "midnight";
     }
@@ -102,11 +102,15 @@ function stringifyHour(hour) {
     }
     else if (hour > 2400) {
         hour -= 2400;
-        output = insertColon(hour.toString()) + "am";
+        if (hour < 100)
+            hour += 1200;
+        output += insertColon(hour.toString()) + "am";
     }
     else if (hour > 1200) {
         hour -= 1200;
-        output = insertColon(hour.toString()) + "pm";
+        if (hour < 100)
+            hour += 1200;
+        output += insertColon(hour.toString()) + "pm";
     }
     else {
         output = insertColon(hour.toString()) + "am";

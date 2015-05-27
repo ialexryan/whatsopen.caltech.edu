@@ -145,17 +145,19 @@ function insertColon(time: string): string {
   2400 -> "midnight"
   2545 -> "1:45am"  */
 function stringifyHour(hour: number): string {
-    var output: string;
+    var output: string = "";
     if ((hour == 2400) || (hour == 0)) {
         output = "midnight";
     } else if (hour == 1200) {
         output = "noon";
     } else if (hour > 2400) {
         hour -= 2400;
-        output = insertColon(hour.toString()) + "am";
+        if (hour < 100) hour += 1200;
+        output += insertColon(hour.toString()) + "am";
     } else if (hour > 1200) {
         hour -= 1200;
-        output = insertColon(hour.toString()) + "pm";
+        if (hour < 100) hour += 1200;
+        output += insertColon(hour.toString()) + "pm";
     } else {
         output = insertColon(hour.toString()) + "am";
     }
