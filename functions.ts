@@ -6,6 +6,7 @@
 
 class Interval {
 
+    // This is what we use when a place isn't open at all on a particular day
     static none: [Interval] = [new Interval(-1, -1)];
 
     private openingTime: number;
@@ -16,26 +17,32 @@ class Interval {
         this.closingTime = close;
     }
 
+    // 1100
     getOpen(): number {
         return this.openingTime;
     }
 
+    // "11:00am"
     getOpenString(): string {
         return stringifyHour(this.openingTime);
     }
 
+    // 2530
     getClose(): number {
         return this.closingTime;
     }
 
+    // "1:30am"
     getCloseString(): string {
         return stringifyHour(this.closingTime);
     }
 
+    // [1100, 2530]
     getInterval(): [number, number] {
         return [this.openingTime, this.closingTime];
     }
 
+    // "11:00am to 1:30am"
     getIntervalString(): string {
         return this.getOpenString() + " to " + this.getCloseString();
     }
