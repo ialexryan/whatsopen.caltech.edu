@@ -60,6 +60,9 @@ var Place = (function () {
     Place.prototype.getHoursForToday = function () {
         return this.getHoursForDay((new Date()).getDay());
     };
+    Place.prototype.getHoursForTomorrow = function () {
+        return this.getHoursForDay(((new Date()).getDay() + 1) % 7);
+    };
     Place.prototype.isOpenNow = function () {
         var date = new Date();
         var hour = date.getHours();
@@ -86,7 +89,13 @@ function insertColon(time) {
 }
 function stringifyHour(hour) {
     var output = "";
-    if (hour > 2400) {
+    if ((hour == 2400) || (hour == 0)) {
+        output = "midnight";
+    }
+    else if (hour == 1200) {
+        output = "noon";
+    }
+    else if (hour > 2400) {
         hour -= 2400;
         output = insertColon(hour.toString()) + "am";
     }
@@ -99,13 +108,25 @@ function stringifyHour(hour) {
     }
     return output;
 }
-function stringifyHours(hours) {
-    if (hours == Interval.none)
-        return "closed today";
+function stringifyHours(place) {
+    var hours = place.getHoursForToday();
+    var date = new Date();
+    var time = (date.getHours() * 100) + date.getMinutes();
     var output = "";
     for (var i = 0; i < hours.length; i++) {
         var x = hours[i];
-        output += x.getIntervalString() + " and ";
+        if (!(x.getClose() < time)) {
+            output += x.getIntervalString() + " and ";
+        }
+    }
+    if ((hours == Interval.none) || (output == "")) {
+        var hours = place.getHoursForTomorrow();
+        if (hours == Interval.none)
+            return "closed today and tomorrow";
+        for (var i = 0; i < hours.length; i++) {
+            var x = hours[i];
+            output += x.getIntervalString() + " tomorrow and ";
+        }
     }
     return output.slice(0, -5);
 }
@@ -139,7 +160,7 @@ function updateHighlighting() {
     closedPlaces.innerHTML = "";
     for (var i = 0; i < places.length; i++) {
         var place = places[i];
-        var content = place.getName() + ": " + stringifyHours(place.getHoursForToday());
+        var content = place.getName() + ": " + stringifyHours(place);
         var para = document.createElement("p");
         var text = document.createTextNode(content);
         para.appendChild(text);

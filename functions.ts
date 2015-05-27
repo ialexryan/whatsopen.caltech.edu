@@ -88,6 +88,10 @@ class Place {
         return this.getHoursForDay((new Date()).getDay());
     }
 
+    getHoursForTomorrow(): [Interval] {
+        return this.getHoursForDay(((new Date()).getDay() + 1) % 7);
+    }
+
     isOpenNow(): boolean {
         var date: Date = new Date();
         var hour: number = date.getHours();
@@ -126,12 +130,29 @@ function stringifyHour(hour: number): string {
     return output;
 }
 
-function stringifyHours(hours: [Interval]): string {
-    if (hours == Interval.none) return "closed today";
+function stringifyHours(place: Place): string {
+
+    var hours = place.getHoursForToday();
+    var date: Date = new Date();
+    var time: number = (date.getHours() * 100) + date.getMinutes();
+
     var output: string = "";
     for (var i=0; i<hours.length; i++) {
         var x: Interval = hours[i];
-        output += x.getIntervalString() + " and ";
+        // Add all of the intervals that are not yet complete to the output
+        if (!(x.getClose() < time)) {
+            output += x.getIntervalString() + " and ";
+        }
+    }
+    // If we didn't add any times, there are no more intervals today
+    // so let's show what's open tomorrow
+    if ((hours == Interval.none) || (output == "")) {
+        var hours = place.getHoursForTomorrow();
+        if (hours == Interval.none) return "closed today and tomorrow";
+        for (var i=0; i<hours.length; i++) {
+            var x: Interval = hours[i];
+            output += x.getIntervalString() + " tomorrow and ";
+        }
     }
     return output.slice(0, -5);  //remove that annoying last "and"
 }
@@ -283,7 +304,7 @@ function updateHighlighting(): void {
     for (var i=0; i<places.length; i++) {
         var place: Place = places[i];
 
-        var content: string = place.getName() + ": " + stringifyHours(place.getHoursForToday());
+        var content: string = place.getName() + ": " + stringifyHours(place);
 
         var para = document.createElement("p");
         var text = document.createTextNode(content);
