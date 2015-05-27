@@ -140,7 +140,7 @@ var places = [
     new Place("Chandler (Breakfast)", true, Interval.none, [new Interval(700, 1000)], [new Interval(700, 1000)], [new Interval(700, 1000)], [new Interval(700, 1000)], [new Interval(700, 1000)], Interval.none),
     new Place("Chandler (Sushi)", true, Interval.none, [new Interval(1100, 1330)], [new Interval(1100, 1330)], [new Interval(1100, 1330)], [new Interval(1100, 1330)], [new Interval(1100, 1330)], Interval.none),
     new Place("Chandler (Lunch)", true, Interval.none, [new Interval(1100, 1430)], [new Interval(1100, 1430)], [new Interval(1100, 1430)], [new Interval(1100, 1430)], [new Interval(1100, 1430)], Interval.none),
-    new Place("Chandler (Pizza and Grill)", true, Interval.none, [new Interval(1100, 1530)], [new Interval(1100, 1530)], [new Interval(1100, 1530)], [new Interval(1100, 1530)], [new Interval(1100, 1530)], Interval.none),
+    new Place("Chandler (Pizza/Grill)", true, Interval.none, [new Interval(1100, 1530)], [new Interval(1100, 1530)], [new Interval(1100, 1530)], [new Interval(1100, 1530)], [new Interval(1100, 1530)], Interval.none),
     new Place("Red Door", true, Interval.none, [new Interval(730, 1730)], [new Interval(730, 1730)], [new Interval(730, 1730)], [new Interval(730, 1730)], [new Interval(730, 1730)], Interval.none),
     new Place("Broad Cafe", true, Interval.none, [new Interval(745, 1430)], [new Interval(745, 1430)], [new Interval(745, 1430)], [new Interval(745, 1430)], [new Interval(745, 1430)], Interval.none),
     new Place("House Dinner", true, Interval.none, [new Interval(1730, 1900)], [new Interval(1730, 1900)], [new Interval(1730, 1900)], [new Interval(1730, 1900)], [new Interval(1700, 1830)], Interval.none),
@@ -167,12 +167,14 @@ function redrawPlaces() {
         var place = places[i];
         var row = document.createElement("tr");
         var name = document.createElement("td");
+        var spacer = document.createElement("td");
         var hours = document.createElement("td");
         var nametext = document.createTextNode(place.getName());
         var hourstext = document.createTextNode(printUpcomingOpenings(place));
         name.appendChild(nametext);
         hours.appendChild(hourstext);
         row.appendChild(name);
+        row.appendChild(spacer);
         row.appendChild(hours);
         if (place.isOpenNow()) {
             addClass(row, "open");

@@ -230,7 +230,7 @@ var places : [Place] = [
     /*Friday*/      [new Interval(1100, 1430)],
     /*Saturday*/    Interval.none
                 ),
-    new Place("Chandler (Pizza and Grill)", true,
+    new Place("Chandler (Pizza/Grill)", true,
     /*Sunday*/      Interval.none,
     /*Monday*/      [new Interval(1100, 1530)],
     /*Tuesday*/     [new Interval(1100, 1530)],
@@ -343,12 +343,14 @@ function redrawPlaces(): void {
 
         var row = document.createElement("tr");
         var name = document.createElement("td");
+        var spacer = document.createElement("td");
         var hours = document.createElement("td");
         var nametext = document.createTextNode(place.getName());
         var hourstext = document.createTextNode(printUpcomingOpenings(place));
         name.appendChild(nametext);
         hours.appendChild(hourstext);
         row.appendChild(name);
+        row.appendChild(spacer);
         row.appendChild(hours);
 
         if (place.isOpenNow()) {
