@@ -2,6 +2,8 @@
 // Typescript is awesome!
 // (P.S. please don't judge how awful this JavaScript looks, it was compiled from much prettier TypeScript.)
 
+/// <reference path="classAddRemove.ts" />
+
 class Interval {
 
     static none: [Interval] = [new Interval(-1, -1)];

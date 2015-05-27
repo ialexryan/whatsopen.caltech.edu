@@ -1,6 +1,7 @@
 // Copyright 2015 Alex Ryan
 // Typescript is awesome!
 // (P.S. please don't judge how awful this JavaScript looks, it was compiled from much prettier TypeScript.)
+/// <reference path="classAddRemove.ts" />
 var Interval = (function () {
     function Interval(open, close) {
         this.openingTime = open;
