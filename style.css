@@ -13,6 +13,10 @@ body {
     margin-bottom:0px;
 }
 
+td {
+    padding-bottom: 8px;
+}
+
 
 #container {
 	min-height:100%;

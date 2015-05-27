@@ -113,7 +113,7 @@ function stringifyHour(hour) {
     }
     return output;
 }
-function stringifyHours(place) {
+function printUpcomingOpenings(place) {
     var hours = place.getHoursForToday();
     var time = getExtendedTime();
     var output = "";
@@ -165,17 +165,22 @@ function redrawPlaces() {
     closedPlaces.innerHTML = "";
     for (var i = 0; i < places.length; i++) {
         var place = places[i];
-        var content = place.getName() + ": " + stringifyHours(place);
-        var para = document.createElement("p");
-        var text = document.createTextNode(content);
-        para.appendChild(text);
+        var row = document.createElement("tr");
+        var name = document.createElement("td");
+        var hours = document.createElement("td");
+        var nametext = document.createTextNode(place.getName());
+        var hourstext = document.createTextNode(printUpcomingOpenings(place));
+        name.appendChild(nametext);
+        hours.appendChild(hourstext);
+        row.appendChild(name);
+        row.appendChild(hours);
         if (place.isOpenNow()) {
-            addClass(para, "open");
-            openPlaces.appendChild(para);
+            addClass(row, "open");
+            openPlaces.appendChild(row);
         }
         else {
-            addClass(para, "closed");
-            closedPlaces.appendChild(para);
+            addClass(row, "closed");
+            closedPlaces.appendChild(row);
         }
     }
 }

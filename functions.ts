@@ -164,7 +164,7 @@ function stringifyHour(hour: number): string {
 
 /* This function attempts to pretty-print all the upcoming open times for a
    given Place. If there are none remaining today, it prints tomorrow's. */
-function stringifyHours(place: Place): string {
+function printUpcomingOpenings(place: Place): string {
 
     var hours = place.getHoursForToday();
     var time: number = getExtendedTime();
@@ -188,7 +188,7 @@ function stringifyHours(place: Place): string {
             output += x.getIntervalString() + " and ";
         }
     }
-    return output.slice(0, -5);  //remove that annoying last "and"
+    return output.slice(0, -5);  //remove that annoying last " and "
 }
 
 
@@ -341,18 +341,22 @@ function redrawPlaces(): void {
     for (var i=0; i<places.length; i++) {
         var place: Place = places[i];
 
-        var content: string = place.getName() + ": " + stringifyHours(place);
-
-        var para = document.createElement("p");
-        var text = document.createTextNode(content);
-        para.appendChild(text);
+        var row = document.createElement("tr");
+        var name = document.createElement("td");
+        var hours = document.createElement("td");
+        var nametext = document.createTextNode(place.getName());
+        var hourstext = document.createTextNode(printUpcomingOpenings(place));
+        name.appendChild(nametext);
+        hours.appendChild(hourstext);
+        row.appendChild(name);
+        row.appendChild(hours);
 
         if (place.isOpenNow()) {
-            addClass(para, "open");
-            openPlaces.appendChild(para);
+            addClass(row, "open");
+            openPlaces.appendChild(row);
         } else {
-            addClass(para, "closed");
-            closedPlaces.appendChild(para);
+            addClass(row, "closed");
+            closedPlaces.appendChild(row);
         }
     }
 }
