@@ -92,18 +92,19 @@ class Place {
         return this.getHoursForDay(((new Date()).getDay() + 1) % 7);
     }
 
+    /* This function returns true if the Place is open right now, and
+       false otherwise. */
     isOpenNow(): boolean {
-        var date: Date = new Date();
-        var hour: number = date.getHours();
-        var minute: number = date.getMinutes();
-        if (hour < 5) {
-            // I'm arbitrarily deciding that any times before 4:59am belong to the previous day.
-            hour += 24;
+        var time: number = getExtendedTime();
+
+        // If we're dealing with 2500 (for example) we need to be looking at
+        // yesterday's open intervals, not today's.
+        if (time > 2400) {
             var openings: [Interval] = this.getHoursForYesterday();
         } else {
             var openings: [Interval] = this.getHoursForToday();
         }
-        var time: number = (hour * 100) + minute;
+
         for (var i=0; i<openings.length; i++) {
             var x: Interval = openings[i];
             if ((time > x.getOpen()) && (time < x.getClose())) return true;
@@ -112,12 +113,32 @@ class Place {
     }
 }
 
+/* This function returns a time between 0500 and 2859.
+   It seems that nothing is ever open around 5am, so I thought that
+   would be a good cutoff time for the day change. */
+function getExtendedTime(): number {
+    var date: Date = new Date();
+    var hour: number = date.getHours();
+    var minute: number = date.getMinutes();
+    // I'm arbitrarily deciding that any times before 4:59am belong to the previous day.
+    if (hour < 5) hour += 24;
+    var time: number = (hour * 100) + minute;
+    return time;
+}
+
+/* This function takes a string and inserts a colon
+   two characters from the end.  "1030" -> "10:30" */
 function insertColon(time: string): string {
     return time.slice(0, -2) + ":" + time.slice(-2, time.length);
 }
 
+/* This function attempts to pretty-print a number between 0000 and 2900
+  as an hour string.
+  1030 -> "10:30am"
+  2400 -> "midnight"
+  2545 -> "1:45am"  */
 function stringifyHour(hour: number): string {
-    var output: string = "";
+    var output: string;
     if ((hour == 2400) || (hour == 0)) {
         output = "midnight";
     } else if (hour == 1200) {
@@ -134,28 +155,30 @@ function stringifyHour(hour: number): string {
     return output;
 }
 
+/* This function attempts to pretty-print all the upcoming open times for a
+   given Place. If there are none remaining today, it prints tomorrow's. */
 function stringifyHours(place: Place): string {
 
     var hours = place.getHoursForToday();
-    var date: Date = new Date();
-    var time: number = (date.getHours() * 100) + date.getMinutes();
-
+    var time: number = getExtendedTime();
     var output: string = "";
+
     for (var i=0; i<hours.length; i++) {
         var x: Interval = hours[i];
-        // Add all of the intervals that are not yet complete to the output
-        if (!(x.getClose() < time)) {
+        // Add all of the intervals that haven't ended yet to the output
+        if (time < x.getClose()) {
             output += x.getIntervalString() + " and ";
         }
     }
-    // If we didn't add any times, there are no more intervals today
-    // so let's show what's open tomorrow
+    // If there are no intervals today, or they all already ended,
+    // let's show what's open tomorrow.
     if ((hours == Interval.none) || (output == "")) {
         var hours = place.getHoursForTomorrow();
-        if (hours == Interval.none) return "closed today and tomorrow";
+        if (hours == Interval.none) return "closed for today and tomorrow";
+        output += "[Tomorrow] "
         for (var i=0; i<hours.length; i++) {
             var x: Interval = hours[i];
-            output += x.getIntervalString() + " tomorrow and ";
+            output += x.getIntervalString() + " and ";
         }
     }
     return output.slice(0, -5);  //remove that annoying last "and"

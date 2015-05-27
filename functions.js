@@ -64,17 +64,13 @@ var Place = (function () {
         return this.getHoursForDay(((new Date()).getDay() + 1) % 7);
     };
     Place.prototype.isOpenNow = function () {
-        var date = new Date();
-        var hour = date.getHours();
-        var minute = date.getMinutes();
-        if (hour < 5) {
-            hour += 24;
+        var time = getExtendedTime();
+        if (time > 2400) {
             var openings = this.getHoursForYesterday();
         }
         else {
             var openings = this.getHoursForToday();
         }
-        var time = (hour * 100) + minute;
         for (var i = 0; i < openings.length; i++) {
             var x = openings[i];
             if ((time > x.getOpen()) && (time < x.getClose()))
@@ -84,11 +80,20 @@ var Place = (function () {
     };
     return Place;
 })();
+function getExtendedTime() {
+    var date = new Date();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    if (hour < 5)
+        hour += 24;
+    var time = (hour * 100) + minute;
+    return time;
+}
 function insertColon(time) {
     return time.slice(0, -2) + ":" + time.slice(-2, time.length);
 }
 function stringifyHour(hour) {
-    var output = "";
+    var output;
     if ((hour == 2400) || (hour == 0)) {
         output = "midnight";
     }
@@ -110,22 +115,22 @@ function stringifyHour(hour) {
 }
 function stringifyHours(place) {
     var hours = place.getHoursForToday();
-    var date = new Date();
-    var time = (date.getHours() * 100) + date.getMinutes();
+    var time = getExtendedTime();
     var output = "";
     for (var i = 0; i < hours.length; i++) {
         var x = hours[i];
-        if (!(x.getClose() < time)) {
+        if (time < x.getClose()) {
             output += x.getIntervalString() + " and ";
         }
     }
     if ((hours == Interval.none) || (output == "")) {
         var hours = place.getHoursForTomorrow();
         if (hours == Interval.none)
-            return "closed today and tomorrow";
+            return "closed for today and tomorrow";
+        output += "[Tomorrow] ";
         for (var i = 0; i < hours.length; i++) {
             var x = hours[i];
-            output += x.getIntervalString() + " tomorrow and ";
+            output += x.getIntervalString() + " and ";
         }
     }
     return output.slice(0, -5);
