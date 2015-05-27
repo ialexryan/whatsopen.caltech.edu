@@ -1,5 +1,6 @@
 // Copyright 2015 Alex Ryan
 // Typescript is awesome!
+// (P.S. please don't judge how awful this JavaScript looks, it was compiled from much prettier TypeScript.)
 
 class Interval {
 
