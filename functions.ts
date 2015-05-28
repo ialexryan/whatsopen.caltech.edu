@@ -159,6 +159,7 @@ function stringifyHour(hour: number): string {
         if (hour < 100) hour += 1200;
         output += insertColon(hour.toString()) + "pm";
     } else {
+        if (hour < 100) hour += 1200;
         output = insertColon(hour.toString()) + "am";
     }
     return output;
