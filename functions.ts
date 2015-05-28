@@ -241,6 +241,15 @@ var places : [Place] = [
     /*Friday*/      [new Interval(1100, 1530)],
     /*Saturday*/    Interval.none
                 ),
+    new Place("South House Kitchens", true,
+    /*Sunday*/      Interval.none,
+    /*Monday*/      [new Interval(1130, 1300)],
+    /*Tuesday*/     [new Interval(1130, 1300)],
+    /*Wednesday*/   [new Interval(1130, 1300)],
+    /*Thursday*/    [new Interval(1130, 1300)],
+    /*Friday*/      [new Interval(1130, 1300)],
+    /*Saturday*/    Interval.none
+                ),
     new Place("Red Door", true,
     /*Sunday*/      Interval.none,
     /*Monday*/      [new Interval(730, 1730)],

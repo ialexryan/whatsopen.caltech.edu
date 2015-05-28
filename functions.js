@@ -145,6 +145,7 @@ var places = [
     new Place("Chandler (Sushi)", true, Interval.none, [new Interval(1100, 1330)], [new Interval(1100, 1330)], [new Interval(1100, 1330)], [new Interval(1100, 1330)], [new Interval(1100, 1330)], Interval.none),
     new Place("Chandler (Lunch)", true, Interval.none, [new Interval(1100, 1430)], [new Interval(1100, 1430)], [new Interval(1100, 1430)], [new Interval(1100, 1430)], [new Interval(1100, 1430)], Interval.none),
     new Place("Chandler (Pizza/Grill)", true, Interval.none, [new Interval(1100, 1530)], [new Interval(1100, 1530)], [new Interval(1100, 1530)], [new Interval(1100, 1530)], [new Interval(1100, 1530)], Interval.none),
+    new Place("South House Kitchens", true, Interval.none, [new Interval(1130, 1300)], [new Interval(1130, 1300)], [new Interval(1130, 1300)], [new Interval(1130, 1300)], [new Interval(1130, 1300)], Interval.none),
     new Place("Red Door", true, Interval.none, [new Interval(730, 1730)], [new Interval(730, 1730)], [new Interval(730, 1730)], [new Interval(730, 1730)], [new Interval(730, 1730)], Interval.none),
     new Place("Broad Cafe", true, Interval.none, [new Interval(745, 1430)], [new Interval(745, 1430)], [new Interval(745, 1430)], [new Interval(745, 1430)], [new Interval(745, 1430)], Interval.none),
     new Place("House Dinner", true, Interval.none, [new Interval(1730, 1900)], [new Interval(1730, 1900)], [new Interval(1730, 1900)], [new Interval(1730, 1900)], [new Interval(1700, 1830)], Interval.none),
