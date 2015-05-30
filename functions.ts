@@ -197,7 +197,7 @@ function printUpcomingOpenings(place: Place): string {
 
 
 // name, isOnCampus, Sunday, Monday,<...>, Saturday
-var places : [Place] = [
+var foodPlaces : [Place] = [
     new Place("Open Kitchen", true,
     /*Sunday*/      [new Interval(1000, 1400)],
     /*Monday*/      [new Interval(730, 1130), new Interval(1500, 1900)],
@@ -306,38 +306,10 @@ var places : [Place] = [
     /*Friday*/      [new Interval(1030, 2500)],
     /*Saturday*/    [new Interval(1100, 2000)]
                 ),
-    new Place("Package Annex", true,
-    /*Sunday*/      Interval.none,
-    /*Monday*/      [new Interval(900, 1100), new Interval(1200, 1600), new Interval(2030, 2230)],
-    /*Tuesday*/     [new Interval(900, 1100), new Interval(1200, 1600), new Interval(2030, 2230)],
-    /*Wednesday*/   [new Interval(900, 1100), new Interval(1200, 1600), new Interval(2030, 2230)],
-    /*Thursday*/    [new Interval(900, 1100), new Interval(1200, 1600), new Interval(2030, 2230)],
-    /*Friday*/      [new Interval(900, 1100), new Interval(1200, 1600), new Interval(2030, 2230)],
-    /*Saturday*/    Interval.none
-                ),
-    new Place("Gym", true,
-    /*Sunday*/      [new Interval(800, 2000)],
-    /*Monday*/      [new Interval(600, 2230)],
-    /*Tuesday*/     [new Interval(600, 2230)],
-    /*Wednesday*/   [new Interval(600, 2230)],
-    /*Thursday*/    [new Interval(600, 2230)],
-    /*Friday*/      [new Interval(600, 2230)],
-    /*Saturday*/    [new Interval(800, 2000)]
-                ),
-    new Place("Bookstore", true,
-    /*Sunday*/      Interval.none,
-    /*Monday*/      [new Interval(830, 1730)],
-    /*Tuesday*/     [new Interval(830, 1730)],
-    /*Wednesday*/   [new Interval(830, 1730)],
-    /*Thursday*/    [new Interval(830, 1730)],
-    /*Friday*/      [new Interval(830, 1730)],
-    /*Saturday*/    Interval.none
-                ),
 ]
 
-var libraries = [
-    // Not quite right, there's multiple intervals in one day
-    new Place("SFL (WIP)", true,
+var libraryPlaces = [
+    new Place("SFL", true,
     /*Sunday*/      [new Interval(900, 2400)],
     /*Monday*/      [new Interval(0, 2400)],
     /*Tuesday*/     [new Interval(0, 2400)],
@@ -393,6 +365,36 @@ var libraries = [
                 ),
 ]
 
+var miscPlaces = [
+    new Place("Package Annex", true,
+    /*Sunday*/      Interval.none,
+    /*Monday*/      [new Interval(900, 1100), new Interval(1200, 1600), new Interval(2030, 2230)],
+    /*Tuesday*/     [new Interval(900, 1100), new Interval(1200, 1600), new Interval(2030, 2230)],
+    /*Wednesday*/   [new Interval(900, 1100), new Interval(1200, 1600), new Interval(2030, 2230)],
+    /*Thursday*/    [new Interval(900, 1100), new Interval(1200, 1600), new Interval(2030, 2230)],
+    /*Friday*/      [new Interval(900, 1100), new Interval(1200, 1600), new Interval(2030, 2230)],
+    /*Saturday*/    Interval.none
+                ),
+    new Place("Gym", true,
+    /*Sunday*/      [new Interval(800, 2000)],
+    /*Monday*/      [new Interval(600, 2230)],
+    /*Tuesday*/     [new Interval(600, 2230)],
+    /*Wednesday*/   [new Interval(600, 2230)],
+    /*Thursday*/    [new Interval(600, 2230)],
+    /*Friday*/      [new Interval(600, 2230)],
+    /*Saturday*/    [new Interval(800, 2000)]
+                ),
+    new Place("Bookstore", true,
+    /*Sunday*/      Interval.none,
+    /*Monday*/      [new Interval(830, 1730)],
+    /*Tuesday*/     [new Interval(830, 1730)],
+    /*Wednesday*/   [new Interval(830, 1730)],
+    /*Thursday*/    [new Interval(830, 1730)],
+    /*Friday*/      [new Interval(830, 1730)],
+    /*Saturday*/    Interval.none
+                ),
+]
+
 /* This function recomputes the current time and updates the DOM */
 function redrawCurrentTime(): void {
     var date: Date = new Date();
@@ -411,20 +413,18 @@ function redrawPlaces(): void {
     closedPlaces.innerHTML = "";
 
     /* Determine which group of locations should be displayed */
-    var whichPlaces = <HTMLInputElement>document.getElementById("whichPlaces");
-    var placeGroup;
-    switch (whichPlaces["elements"].placeType.value) {
-        case "misc":
-            placeGroup = places;
-            break;
+    var placeGroup = [];
 
-        case "lib":
-            placeGroup = libraries;
-            break;
+    if (document.getElementById("foodPlaces").checked) {
+        placeGroup = placeGroup.concat(foodPlaces);
+    }
 
-        default:
-            placeGroup = places;
-            break;
+    if (document.getElementById("libraryPlaces").checked) {
+        placeGroup = placeGroup.concat(libraryPlaces);
+    }
+
+    if (document.getElementById("miscPlaces").checked) {
+        placeGroup = placeGroup.concat(miscPlaces);
     }
 
     for (var i=0; i<placeGroup.length; i++) {
