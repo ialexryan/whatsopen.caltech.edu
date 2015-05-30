@@ -23,6 +23,11 @@ mixpanel.init("6ec2338c97e3069bdf89ca53214c7684");</script><!-- end Mixpanel -->
     <div id="container">
         <div id="header">
             <h3 id="currentTime"></h3>
+            <form id="whichPlaces">
+                <input type="radio" name="placeType" value="misc" onclick="redrawPlaces();"checked>Miscellaneous
+                <br>
+                <input type="radio" name="placeType" value="lib" onclick="redrawPlaces();">Libraries
+            </form>
             <hr>
         </div>
         <div id="content">

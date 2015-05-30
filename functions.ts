@@ -44,6 +44,7 @@ class Interval {
 
     // "11:00am to 1:30am"
     getIntervalString(): string {
+        if (this.getOpen() == 0 && this.getClose() == 2400) return "All day";
         return this.getOpenString() + " to " + this.getCloseString();
     }
 }
@@ -334,6 +335,64 @@ var places : [Place] = [
                 ),
 ]
 
+var libraries = [
+    // Not quite right, there's multiple intervals in one day
+    new Place("SFL (WIP)", true,
+    /*Sunday*/      [new Interval(900, 2400)],
+    /*Monday*/      [new Interval(0, 2400)],
+    /*Tuesday*/     [new Interval(0, 2400)],
+    /*Wednesday*/   [new Interval(0, 2400)],
+    /*Thursday*/    [new Interval(0, 2400)],
+    /*Friday*/      [new Interval(0, 2700)],
+    /*Saturday*/    [new Interval(900, 2600)]
+                ),
+    new Place("Millikan", true,
+    /*Sunday*/      [new Interval(900, 2400)],
+    /*Monday*/      [new Interval(800, 2400)],
+    /*Tuesday*/     [new Interval(800, 2400)],
+    /*Wednesday*/   [new Interval(800, 2400)],
+    /*Thursday*/    [new Interval(800, 2400)],
+    /*Friday*/      [new Interval(800, 2400)],
+    /*Saturday*/    [new Interval(900, 2400)]
+                ),
+    new Place("Dabney", true,
+    /*Sunday*/      Interval.none,
+    /*Monday*/      [new Interval(800, 1700)],
+    /*Tuesday*/     [new Interval(800, 1700)],
+    /*Wednesday*/   [new Interval(800, 1700)],
+    /*Thursday*/    [new Interval(800, 1700)],
+    /*Friday*/      [new Interval(800, 1700)],
+    /*Saturday*/    Interval.none
+                ),
+    new Place("Cahill", true,
+    /*Sunday*/      Interval.none,
+    /*Monday*/      [new Interval(800, 1700)],
+    /*Tuesday*/     [new Interval(800, 1700)],
+    /*Wednesday*/   [new Interval(800, 1700)],
+    /*Thursday*/    [new Interval(800, 1700)],
+    /*Friday*/      [new Interval(800, 1700)],
+    /*Saturday*/    Interval.none
+                ),
+    new Place("Geology", true,
+    /*Sunday*/      Interval.none,
+    /*Monday*/      [new Interval(800, 1700)],
+    /*Tuesday*/     [new Interval(800, 1700)],
+    /*Wednesday*/   [new Interval(800, 1700)],
+    /*Thursday*/    [new Interval(800, 1700)],
+    /*Friday*/      [new Interval(800, 1700)],
+    /*Saturday*/    Interval.none
+                ),
+    new Place("Archives", true,
+    /*Sunday*/      Interval.none,
+    /*Monday*/      [new Interval(800, 1700)],
+    /*Tuesday*/     [new Interval(800, 1700)],
+    /*Wednesday*/   [new Interval(800, 1700)],
+    /*Thursday*/    [new Interval(800, 1700)],
+    /*Friday*/      [new Interval(800, 1700)],
+    /*Saturday*/    Interval.none
+                ),
+]
+
 /* This function recomputes the current time and updates the DOM */
 function redrawCurrentTime(): void {
     var date: Date = new Date();
@@ -350,8 +409,26 @@ function redrawPlaces(): void {
     var closedPlaces = document.getElementById("closedPlaces");
     openPlaces.innerHTML = "";
     closedPlaces.innerHTML = "";
-    for (var i=0; i<places.length; i++) {
-        var place: Place = places[i];
+
+    /* Determine which group of locations should be displayed */
+    var whichPlaces = <HTMLInputElement>document.getElementById("whichPlaces");
+    var placeGroup;
+    switch (whichPlaces["elements"].placeType.value) {
+        case "misc":
+            placeGroup = places;
+            break;
+
+        case "lib":
+            placeGroup = libraries;
+            break;
+
+        default:
+            placeGroup = places;
+            break;
+    }
+
+    for (var i=0; i<placeGroup.length; i++) {
+        var place: Place = placeGroup[i];
 
         var row = document.createElement("tr");
         var name = document.createElement("td");
