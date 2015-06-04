@@ -102,15 +102,15 @@ function redrawPlaces(): void {
     /* Determine which group of locations should be displayed */
     var placeGroup = [];
 
-    if (document.getElementById("foodPlaces").checked) {
+    if ((<HTMLInputElement>document.getElementById("foodPlaces")).checked) {
         placeGroup = placeGroup.concat(foodPlaces);
     }
 
-    if (document.getElementById("libraryPlaces").checked) {
+    if ((<HTMLInputElement>document.getElementById("libraryPlaces")).checked) {
         placeGroup = placeGroup.concat(libraryPlaces);
     }
 
-    if (document.getElementById("miscPlaces").checked) {
+    if ((<HTMLInputElement>document.getElementById("miscPlaces")).checked) {
         placeGroup = placeGroup.concat(miscPlaces);
     }
 
