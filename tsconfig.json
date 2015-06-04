@@ -16,6 +16,8 @@
     ],
     "files": [
         "./classAddRemove.ts",
+        "./classes.ts",
+        "./data.ts",
         "./functions.ts"
     ]
 }
