@@ -17,6 +17,7 @@
     "files": [
         "./classAddRemove.ts",
         "./classes.ts",
+        "./fall15Hours.ts",
         "./functions.ts",
         "./spring15Hours.ts",
         "./summer15Hours.ts"
