@@ -172,11 +172,11 @@ var libraryPlaces = [
 var miscPlaces = [
     new Place("Package Annex", true,
     /*Sunday*/      Interval.none,
-    /*Monday*/      [new Interval(900, 1100), new Interval(1200, 1600), new Interval(2030, 2230)],
-    /*Tuesday*/     [new Interval(900, 1100), new Interval(1200, 1600), new Interval(2030, 2230)],
-    /*Wednesday*/   [new Interval(900, 1100), new Interval(1200, 1600), new Interval(2030, 2230)],
-    /*Thursday*/    [new Interval(900, 1100), new Interval(1200, 1600), new Interval(2030, 2230)],
-    /*Friday*/      [new Interval(900, 1100), new Interval(1200, 1600), new Interval(2030, 2230)],
+    /*Monday*/      [new Interval(1200, 1600), new Interval(2030, 2230)],
+    /*Tuesday*/     [new Interval(1200, 1600), new Interval(2030, 2230)],
+    /*Wednesday*/   [new Interval(1200, 1600), new Interval(2030, 2230)],
+    /*Thursday*/    [new Interval(1200, 1600), new Interval(2030, 2230)],
+    /*Friday*/      [new Interval(1200, 1600), new Interval(2030, 2230)],
     /*Saturday*/    Interval.none
                 ),
     new Place("Gym", true,
