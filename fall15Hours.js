@@ -21,7 +21,7 @@ var libraryPlaces = [
     new Place("Archives", true, Interval.none, [new Interval(800, 1700)], [new Interval(800, 1700)], [new Interval(800, 1700)], [new Interval(800, 1700)], [new Interval(800, 1700)], Interval.none),
 ];
 var miscPlaces = [
-    new Place("Package Annex", true, Interval.none, [new Interval(1200, 1600), new Interval(2030, 2230)], [new Interval(1200, 1600), new Interval(2030, 2230)], [new Interval(1200, 1600), new Interval(2030, 2230)], [new Interval(1200, 1600), new Interval(2030, 2230)], [new Interval(1200, 1600), new Interval(2030, 2230)], Interval.none),
+    new Place("Package Annex", true, Interval.none, [new Interval(1200, 1600), new Interval(2000, 2200)], [new Interval(1200, 1600), new Interval(2000, 2200)], [new Interval(1200, 1600), new Interval(2000, 2200)], [new Interval(1200, 1600), new Interval(2000, 2200)], [new Interval(1200, 1600), new Interval(2000, 2200)], Interval.none),
     new Place("Gym", true, [new Interval(800, 2000)], [new Interval(600, 2230)], [new Interval(600, 2230)], [new Interval(600, 2230)], [new Interval(600, 2230)], [new Interval(600, 2230)], [new Interval(800, 2000)]),
     new Place("Bookstore", true, Interval.none, [new Interval(830, 1730)], [new Interval(830, 1730)], [new Interval(830, 1730)], [new Interval(830, 1730)], [new Interval(830, 1730)], Interval.none),
 ];
