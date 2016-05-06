@@ -32,6 +32,7 @@ td {
 #header {
     background-color:#FBFBFB;
     width:100%;
+    max-width: 800px; /* This shouldn't be necessary bc it should inherit width from parent, but I think position:fixed broke that */
     height:100px;
     padding-top:0px;
     position:fixed;
