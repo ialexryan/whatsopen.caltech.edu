@@ -13,6 +13,7 @@ body {
 
 body {
     margin: 0px auto; /* Center the body element */
+    padding-left: 10px; /* Add a little breathing room on the left */
     max-width: 800px;
     color: #444;
     background-color: #FBFBFB;
