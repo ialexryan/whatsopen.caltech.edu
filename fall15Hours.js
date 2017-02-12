@@ -1,5 +1,5 @@
 var foodPlaces = [
-    new Place("Open Kitchen", true, [new Interval(1000, 1400)], [new Interval(730, 1130), new Interval(1500, 1900)], [new Interval(730, 1130), new Interval(1500, 1900)], [new Interval(730, 1130), new Interval(1500, 1900)], [new Interval(730, 1130), new Interval(1500, 1900)], [new Interval(730, 1130), new Interval(1500, 1900)], [new Interval(1000, 1400)]),
+    new Place("Open Kitchen", true, [new Interval(1000, 1500)], [new Interval(730, 1130), new Interval(1500, 1900)], [new Interval(730, 1130), new Interval(1500, 1900)], [new Interval(730, 1130), new Interval(1500, 1900)], [new Interval(730, 1130), new Interval(1500, 1900)], [new Interval(730, 1130), new Interval(1500, 1900)], [new Interval(1000, 1500)]),
     new Place("Chandler (Breakfast)", true, Interval.none, [new Interval(700, 1000)], [new Interval(700, 1000)], [new Interval(700, 1000)], [new Interval(700, 1000)], [new Interval(700, 1000)], Interval.none),
     new Place("Chandler (Sushi)", true, Interval.none, [new Interval(1100, 1330)], [new Interval(1100, 1330)], [new Interval(1100, 1330)], [new Interval(1100, 1330)], [new Interval(1100, 1330)], Interval.none),
     new Place("Chandler (Lunch)", true, Interval.none, [new Interval(1100, 1430)], [new Interval(1100, 1430)], [new Interval(1100, 1430)], [new Interval(1100, 1430)], [new Interval(1100, 1430)], Interval.none),
