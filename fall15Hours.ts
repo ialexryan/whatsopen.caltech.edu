@@ -3,13 +3,13 @@
 // name, isOnCampus, Sunday, Monday,<...>, Saturday
 var foodPlaces : [Place] = [
     new Place("Open Kitchen", true,
-    /*Sunday*/      [new Interval(1000, 1400)],
+    /*Sunday*/      [new Interval(900, 1500)],
     /*Monday*/      [new Interval(730, 1130), new Interval(1500, 1900)],
     /*Tuesday*/     [new Interval(730, 1130), new Interval(1500, 1900)],
     /*Wednesday*/   [new Interval(730, 1130), new Interval(1500, 1900)],
     /*Thursday*/    [new Interval(730, 1130), new Interval(1500, 1900)],
     /*Friday*/      [new Interval(730, 1130), new Interval(1500, 1900)],
-    /*Saturday*/    [new Interval(1000, 1400)]
+    /*Saturday*/    [new Interval(900, 1500)]
                 ),
     new Place("Chandler (Breakfast)", true,
     /*Sunday*/      Interval.none,
