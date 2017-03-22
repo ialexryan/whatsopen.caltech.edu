@@ -1,5 +1,5 @@
 {
-    "version": "1.5.0-alpha",
+    "compileOnSave": true,
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
@@ -15,11 +15,15 @@
         "!./node_modules/**/*.ts"
     ],
     "files": [
-        "./classAddRemove.ts",
+        "./cssClassAddRemove.ts",
         "./classes.ts",
+        "./data.ts",
         "./fall15Hours.ts",
         "./functions.ts",
         "./spring15Hours.ts",
         "./summer15Hours.ts"
-    ]
+    ],
+    "atom": {
+        "rewriteTsconfig": true
+    }
 }

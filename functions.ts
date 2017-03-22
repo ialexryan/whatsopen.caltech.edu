@@ -2,7 +2,7 @@
 // (P.S. please don't judge how awful this JavaScript looks, it was compiled
 // from much prettier TypeScript. TS is awesome!)
 
-/// <reference path="classAddRemove.ts" />
+/// <reference path="cssClassAddRemove.ts" />
 /// <reference path="classes.ts" />
 /// <reference path="data.ts" />
 
@@ -55,7 +55,7 @@ function stringifyHour(hour: number): string {
    given Place. If there are none remaining today, it prints tomorrow's. */
 function printUpcomingOpenings(place: Place): string {
 
-    var hours = place.getHoursForToday();
+    var hours: Interval[] = place.getHoursForToday();
     var time: number = getExtendedTime();
     var output: string = "";
 
@@ -142,6 +142,9 @@ function redrawPlaces(): void {
 /* This is the "main" function of sorts, it gets called when the page loads.
    It sets the places list and time to refresh every 5 seconds. */
 window.onload = function() {
+    // Get the JSON hours data from the GitHub wiki
+    fetchDatabase(redrawPlaces);
+
     // Populate the Current Time field
     redrawCurrentTime();
     setInterval(redrawCurrentTime, 5000);

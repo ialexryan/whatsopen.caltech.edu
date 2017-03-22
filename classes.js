@@ -23,20 +23,24 @@ var Interval = (function () {
             return "All day";
         return this.getOpenString() + " to " + this.getCloseString();
     };
-    Interval.none = [new Interval(-1, -1)];
     return Interval;
-})();
+}());
+Interval.none = [new Interval(-1, -1)];
 var Place = (function () {
-    function Place(name, isOnCampus, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday) {
+    function Place(name, data) {
+        var _this = this;
         this.name = name;
-        this.isOnCampus = isOnCampus;
-        this.Sunday = Sunday;
-        this.Monday = Monday;
-        this.Tuesday = Tuesday;
-        this.Wednesday = Wednesday;
-        this.Thursday = Thursday;
-        this.Friday = Friday;
-        this.Saturday = Saturday;
+        this.isOnCampus = true;
+        Object.keys(data).forEach(function (dayName) {
+            if (data[dayName] === []) {
+                _this[dayName] = Interval.none;
+            }
+            else {
+                _this[dayName] = data[dayName].map(function (interval) {
+                    return new Interval(interval[0], interval[1]);
+                });
+            }
+        });
     }
     Place.prototype.getName = function () {
         return this.name;
@@ -77,4 +81,4 @@ var Place = (function () {
         return false;
     };
     return Place;
-})();
+}());

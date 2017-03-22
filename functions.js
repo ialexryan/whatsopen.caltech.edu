@@ -1,9 +1,3 @@
-// Copyright 2015 Alex Ryan
-// (P.S. please don't judge how awful this JavaScript looks, it was compiled
-// from much prettier TypeScript. TS is awesome!)
-/// <reference path="classAddRemove.ts" />
-/// <reference path="classes.ts" />
-/// <reference path="data.ts" />
 function getExtendedTime() {
     var date = new Date();
     var hour = date.getHours();
@@ -111,6 +105,7 @@ function redrawPlaces() {
     }
 }
 window.onload = function () {
+    fetchDatabase(redrawPlaces);
     redrawCurrentTime();
     setInterval(redrawCurrentTime, 5000);
     redrawPlaces();

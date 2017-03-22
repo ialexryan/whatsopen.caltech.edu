@@ -43,34 +43,47 @@ class Interval {
     }
 }
 
+interface PlaceWeekIntervalsJSON {
+    Sunday:    Array<[number, number]>;
+    Monday:    Array<[number, number]>;
+    Tuesday:   Array<[number, number]>;
+    Wednesday: Array<[number, number]>;
+    Thursday:  Array<[number, number]>;
+    Friday:    Array<[number, number]>;
+    Saturday:  Array<[number, number]>;
+}
+
 class Place {
     private name: string;
     private isOnCampus: boolean;
-    private Sunday: [Interval];
-    private Monday: [Interval];
-    private Tuesday: [Interval];
-    private Wednesday: [Interval];
-    private Thursday: [Interval];
-    private Friday: [Interval];
-    private Saturday: [Interval];
+    private Sunday: Interval[];
+    private Monday: Interval[];
+    private Tuesday: Interval[];
+    private Wednesday: Interval[];
+    private Thursday: Interval[];
+    private Friday: Interval[];
+    private Saturday: Interval[];
 
-    constructor(name: string, isOnCampus: boolean, Sunday: [Interval], Monday: [Interval], Tuesday: [Interval], Wednesday: [Interval], Thursday: [Interval], Friday: [Interval], Saturday: [Interval]) {
+    constructor(name: string, data: PlaceWeekIntervalsJSON) {
         this.name = name;
-        this.isOnCampus = isOnCampus;
-        this.Sunday = Sunday;
-        this.Monday = Monday;
-        this.Tuesday = Tuesday;
-        this.Wednesday = Wednesday;
-        this.Thursday = Thursday;
-        this.Friday = Friday;
-        this.Saturday = Saturday;
+        this.isOnCampus = true;
+
+        Object.keys(data).forEach(dayName => {
+            if (data[dayName] === []) {
+                this[dayName] = Interval.none;
+            } else {
+                this[dayName] = data[dayName].map(interval => {
+                    return new Interval(interval[0], interval[1]);
+                });
+            }
+        });
     }
 
     getName(): string {
         return this.name;
     }
 
-    getHoursForDay(d: number): [Interval] {
+    getHoursForDay(d: number): Interval[] {
         switch (d) {
             case 0: return this.Sunday;
             case 1: return this.Monday;
@@ -82,15 +95,15 @@ class Place {
         }
     }
 
-    getHoursForYesterday(): [Interval] {
+    getHoursForYesterday(): Interval[] {
         return this.getHoursForDay(((new Date()).getDay() - 1 + 7) % 7);
     }
 
-    getHoursForToday(): [Interval] {
+    getHoursForToday(): Interval[] {
         return this.getHoursForDay((new Date()).getDay());
     }
 
-    getHoursForTomorrow(): [Interval] {
+    getHoursForTomorrow(): Interval[] {
         return this.getHoursForDay(((new Date()).getDay() + 1) % 7);
     }
 
@@ -102,9 +115,9 @@ class Place {
         // If we're dealing with 2500 (for example) we need to be looking at
         // yesterday's open intervals, not today's.
         if (time > 2400) {
-            var openings: [Interval] = this.getHoursForYesterday();
+            var openings: Interval[] = this.getHoursForYesterday();
         } else {
-            var openings: [Interval] = this.getHoursForToday();
+            var openings: Interval[] = this.getHoursForToday();
         }
 
         for (var i=0; i<openings.length; i++) {
