@@ -59,25 +59,19 @@ function printUpcomingOpenings(place: Place): string {
     var time: number = getExtendedTime();
     var output: string = "";
 
-    for (var i=0; i<hours.length; i++) {
-        var x: Interval = hours[i];
-        // Add all of the intervals that haven't ended yet to the output
-        if (time < x.getClose()) {
-            output += x.getIntervalString() + " and ";
-        }
-    }
+    // Add all of the intervals that haven't ended yet to the output
+    output += hours.filter(x => time < x.getClose()).map(x => x.getIntervalString()).join(" and ");
+    
     // If there are no intervals today, or they all already ended,
     // let's show what's open tomorrow.
     if ((hours == Interval.none) || (output == "")) {
         var hours = place.getHoursForTomorrow();
-        if (hours == Interval.none) return "closed for today and tomorrow";
+        if (hours.length === 0 || hours == Interval.none)
+           return "closed for today and tomorrow";
         output += "[Tomorrow] "
-        for (var i=0; i<hours.length; i++) {
-            var x: Interval = hours[i];
-            output += x.getIntervalString() + " and ";
-        }
+        output += hours.map(x => x.getIntervalString()).join(" and ");
     }
-    return output.slice(0, -5);  //remove that annoying last " and "
+    return output;
 }
 
 
