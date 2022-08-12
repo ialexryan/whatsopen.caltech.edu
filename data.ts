@@ -34,6 +34,6 @@ function fetchDatabase(callback: () => void): void {
             callback();
         }
     }
-    xhr.open("GET", "https://rawgit.com/wiki/ialexryan/whatsopen.caltech.edu/Hours-Database.md", true);
+    xhr.open("GET", "https://rawgit.com/wiki/ialexryan/whatsopen.caltech.edu/Hours-Database.md?nocache=" + new Date().getTime(), true);
     xhr.send();
 }
